@@ -29,11 +29,15 @@
     }
 
     .nav {
-    position: absolute;
-    bottom: env(safe-area-inset-bottom); /* Учитываем нижнюю панель */
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    position: fixed; /* Закрепляет панель внизу */
+    bottom: 0; /* Располагает её у нижнего края */
+    width: 100%; /* Растягивает панель по всей ширине */
+    background: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон (для видимости) */
+    padding: 10px 0; /* Отступы для удобства */
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px); /* Учитывает чёлку */
+    display: flex; /* Центрирует содержимое */
+    justify-content: center; /* Центрирует кнопки */
+    z-index: 100; /* Устанавливает высокий приоритет отображения */
 }
 
 .nav span {
@@ -111,9 +115,10 @@
         padding: 8px 16px;
       }
 
-      .nav span {
-        font-size: 13px;
-      }
+      .nav {
+        font-size: 14px; /* Уменьшение размера текста */
+        padding-bottom: calc(env(safe-area-inset-bottom) + 15px); /* Учитываем безопасную область */
+    }
 
       .ui {
         top: 40%;
