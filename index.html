@@ -229,16 +229,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
   <script>
-    // Отключение жестов
-    document.addEventListener('gesturestart', function(e) {
-        e.preventDefault();
-    });
-    document.addEventListener('gesturechange', function(e) {
-        e.preventDefault();
-    });
-    document.addEventListener('gestureend', function(e) {
-        e.preventDefault();
-    });
     // Текущая вкладка
     let currentTab = 'farming';
 
@@ -436,6 +426,23 @@ animate();
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
     });
+    // ========== Новый код для отключения жестов ==========
+// Отключает зумирование и жесты
+document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+});
+document.addEventListener('gesturechange', function(e) {
+    e.preventDefault();
+});
+document.addEventListener('gestureend', function(e) {
+    e.preventDefault();
+});
+
+// Отключает прокрутку
+window.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+// ======================================================
   </script>
 </body>
 </html>
