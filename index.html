@@ -6,16 +6,18 @@
   <title>Tapalka Clicker</title>
   <style>
     body {
-      margin: 0;
-      overflow: hidden;
-      background: black;
-      color: white;
-      font-family: 'Space Mono', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
-    }
+    margin: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    overflow: hidden;
+    background: black;
+    color: white;
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
 
     /* Твой стиль для вкладки Tasks */
     #tasksTab .centered-text {
@@ -27,30 +29,30 @@
     }
 
     .nav {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
+    position: absolute;
+    bottom: env(safe-area-inset-bottom); /* Учитываем нижнюю панель */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-    .nav span {
-      font-size: 15px;
-      margin: 0 10px;
-      cursor: pointer;
-      padding: 5px;
-      color: gray;
-      text-transform: capitalize;
-    }
+.nav span {
+    font-size: 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    padding: 5px;
+    color: gray;
+    text-transform: capitalize;
+}
 
-    .nav span:hover {
-      color: white;
-    }
+.nav span:hover {
+    color: white;
+}
 
-    .nav span.active {
-      text-decoration: none;
-      font-weight: bold;
-    }
+.nav span.active {
+    text-decoration: none;
+    font-weight: bold;
+}
 
     .tab {
       display: none;
