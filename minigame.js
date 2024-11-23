@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             canvas.style.top = 0;
             canvas.style.left = 0;
             canvas.style.border = "none"; // Убираем рамку
-            canvas.style.backgroundColor = "transparent"; // Прозрачный фон
+            canvas.style.backgroundColor = "black"; // Прозрачный фон
             document.getElementById("minigameTab").appendChild(canvas);
             ctx = canvas.getContext("2d");
         }
