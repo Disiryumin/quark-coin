@@ -47,29 +47,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // Запуск игры
     function startGame() {
         if (!canvas) {
-          canvas = document.createElement("canvas");
-          canvas.width = window.innerWidth; // Ширина канваса = ширине окна
-          canvas.height = window.innerHeight; // Высота канваса = высоте окна
-      
-          // Устанавливаем стили для полной прозрачности и отсутствия границ
-          canvas.style.border = "none"; // Убираем границу
-          canvas.style.backgroundColor = "transparent"; // Прозрачный фон
-          canvas.style.position = "absolute"; // Абсолютное позиционирование
-          canvas.style.top = "0"; // Привязка к верхней границе
-          canvas.style.left = "0"; // Привязка к левой границе
-      
-          // Добавляем канвас в вкладку Mini-Game
-          document.getElementById("minigameTab").appendChild(canvas);
-          ctx = canvas.getContext("2d");
+            canvas = document.createElement("canvas");
+            canvas.width = window.innerWidth; // Растягиваем по ширине экрана
+            canvas.height = window.innerHeight; // Растягиваем по высоте экрана
+            canvas.style.position = "absolute"; // Делаем его абсолютным
+            canvas.style.top = 0;
+            canvas.style.left = 0;
+            canvas.style.border = "none"; // Убираем рамку
+            canvas.style.backgroundColor = "transparent"; // Прозрачный фон
+            document.getElementById("minigameTab").appendChild(canvas);
+            ctx = canvas.getContext("2d");
         }
-      
+    
         loadMonsterSprites();
-      
+    
         animationInterval = setInterval(() => {
-          drawMonster();
+            drawMonster();
         }, 500); // Скорость анимации (500 мс между кадрами)
-      }
-
+    }
+        // Добавляем обработчик события изменения размера окна
+window.addEventListener("resize", () => {
+    if (canvas) {
+        canvas.width = window.innerWidth; // Автоматически подстраиваем ширину
+        canvas.height = window.innerHeight; // Автоматически подстраиваем высоту
+    }
+});
     // Остановка игры
     function stopGame() {
         if (animationInterval) {
