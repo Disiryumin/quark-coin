@@ -40,27 +40,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // Отрисовка монстра
     function drawMonster() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистка холста
-        ctx.drawImage(monsterFrames[currentFrame], monsterX, monsterY, 100, 100); // Отрисовка текущего кадра
+        ctx.drawImage(monsterFrames[currentFrame], monsterX, monsterY, 50, 50); // Отрисовка текущего кадра
         currentFrame = (currentFrame + 1) % monsterFrames.length; // Переключение кадров
     }
 
     // Запуск игры
     function startGame() {
         if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.width = 300; // Размеры игрового поля
-            canvas.height = 300;
-            canvas.style.border = "2px solid white";
-            document.getElementById("minigameTab").appendChild(canvas);
-            ctx = canvas.getContext("2d");
+          canvas = document.createElement("canvas");
+          canvas.width = window.innerWidth; // Ширина канваса = ширине окна
+          canvas.height = window.innerHeight; // Высота канваса = высоте окна
+      
+          // Устанавливаем стили для полной прозрачности и отсутствия границ
+          canvas.style.border = "none"; // Убираем границу
+          canvas.style.backgroundColor = "transparent"; // Прозрачный фон
+          canvas.style.position = "absolute"; // Абсолютное позиционирование
+          canvas.style.top = "0"; // Привязка к верхней границе
+          canvas.style.left = "0"; // Привязка к левой границе
+      
+          // Добавляем канвас в вкладку Mini-Game
+          document.getElementById("minigameTab").appendChild(canvas);
+          ctx = canvas.getContext("2d");
         }
-
+      
         loadMonsterSprites();
-
+      
         animationInterval = setInterval(() => {
-            drawMonster();
+          drawMonster();
         }, 500); // Скорость анимации (500 мс между кадрами)
-    }
+      }
 
     // Остановка игры
     function stopGame() {
