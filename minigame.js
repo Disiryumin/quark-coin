@@ -31,9 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadMonsterSprites() {
         const frame1 = new Image();
         frame1.src = "assets/alien_frame1.png";
+        frame1.onload = () => console.log("Frame 1 loaded");
+        frame1.onerror = () => console.error("Error loading Frame 1");
+    
         const frame2 = new Image();
         frame2.src = "assets/alien_frame2.png";
-
+        frame2.onload = () => console.log("Frame 2 loaded");
+        frame2.onerror = () => console.error("Error loading Frame 2");
+    
         monsterFrames = [frame1, frame2];
     }
 
