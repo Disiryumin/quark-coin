@@ -107,7 +107,7 @@ tasksButton.addEventListener("click", () => switchTab("tasks"));
 
 // Добавьте этот код в самом конце файла:
 
-// ========== Новый код для отключения жестов ==========
+// Блокировка жестов
 document.addEventListener('gesturestart', function(e) {
   e.preventDefault();
 });
@@ -118,7 +118,16 @@ document.addEventListener('gestureend', function(e) {
   e.preventDefault();
 });
 
-window.addEventListener('touchmove', function(e) {
-  e.preventDefault();
+// Отключение зума только для multi-touch
+window.addEventListener('touchstart', function(e) {
+  if (e.touches.length > 1) {
+      e.preventDefault();
+  }
 }, { passive: false });
-// ======================================================
+
+// Прокрутка для multi-touch
+window.addEventListener('touchmove', function(e) {
+  if (e.touches.length > 1) {
+      e.preventDefault();
+  }
+}, { passive: false });
