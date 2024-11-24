@@ -1,4 +1,5 @@
-// Настройка канваса для звездного фона
+import { initThreeJS } from './three.js';
+
 const starCanvas = document.getElementById("starsCanvas");
 const starCtx = starCanvas.getContext("2d");
 
@@ -22,19 +23,60 @@ for (let i = 0; i < 100; i++) {
 }
 
 // Анимация звезд
-function animateStars() {
+// Вращение звездного фона через гироскоп или мышь
+let rotationX = 0;
+let rotationY = 0;
+let targetRotationX = 0;
+let targetRotationY = 0;
+
+// Для мыши
+document.addEventListener("mousemove", (e) => {
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  const deltaX = (e.clientX - centerX) / centerX;
+  const deltaY = (e.clientY - centerY) / centerY;
+
+  targetRotationY = deltaX * 0.5; // Чувствительность вращения
+  targetRotationX = deltaY * 0.5;
+});
+
+// Для гироскопа (смартфоны)
+if (window.DeviceOrientationEvent) {
+  window.addEventListener("deviceorientation", (event) => {
+    const gamma = event.gamma; // Влево-вправо
+    const beta = event.beta; // Вверх-вниз
+
+    targetRotationY = gamma / 90; // Нормализуем значение
+    targetRotationX = beta / 90;
+  });
+}
+
+// Анимация вращения звезд
+function animateStarsWithRotation() {
   starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+
+  rotationX += (targetRotationX - rotationX) * 0.1;
+  rotationY += (targetRotationY - rotationY) * 0.1;
+
   stars.forEach(star => {
-    star.y += star.speed;
-    if (star.y > starCanvas.height) star.y = 0;
+    const rotatedX = star.x + rotationY * 100; // Эффект вращения по X
+    const rotatedY = star.y + rotationX * 100; // Эффект вращения по Y
+
     starCtx.beginPath();
-    starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    starCtx.arc(rotatedX, rotatedY, star.radius, 0, Math.PI * 2);
     starCtx.fillStyle = "white";
     starCtx.fill();
+
+    star.y += star.speed;
+    if (star.y > starCanvas.height) star.y = 0;
   });
-  requestAnimationFrame(animateStars);
+
+  requestAnimationFrame(animateStarsWithRotation);
 }
-animateStars();
+
+// Заменяем старую анимацию новой
+animateStarsWithRotation();
 // Переключение вкладок
 const farmingButton = document.getElementById("farmingButton");
 const minigameButton = document.getElementById("minigameButton");
@@ -57,3 +99,7 @@ function switchTab(tabName) {
 farmingButton.addEventListener("click", () => switchTab("farming"));
 minigameButton.addEventListener("click", () => switchTab("minigame"));
 tasksButton.addEventListener("click", () => switchTab("tasks"));
+
+document.addEventListener('DOMContentLoaded', () => {
+    initThreeJS();
+  });
