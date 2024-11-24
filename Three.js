@@ -1,91 +1,52 @@
-// Подключаем Three.js
-import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
+// Сцена, камера и рендерер
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-// Переменные для сцены, камеры и рендера
-let scene, camera, renderer, stars, isDragging, rotationX, rotationY, targetRotationX, targetRotationY, autoRotation;
+// Материал для звёзд
+const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5 });
+const starGeometry = new THREE.BufferGeometry();
+const starCount = 1000;
+const starPositions = new Float32Array(starCount * 3);
 
-// Инициализация сцены
-function initThreeJS() {
-  // Создаем сцену
-  scene = new THREE.Scene();
+// Генерация случайных звёзд
+for (let i = 0; i < starCount; i++) {
+  const theta = Math.random() * 2 * Math.PI;
+  const phi = Math.acos(2 * Math.random() - 1);
+  const x = 500 * Math.sin(phi) * Math.cos(theta);
+  const y = 500 * Math.sin(phi) * Math.sin(theta);
+  const z = 500 * Math.cos(phi);
 
-  // Создаем камеру
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 50;
-
-  // Создаем рендерер
-  renderer = new THREE.WebGLRenderer({ alpha: true }); // Прозрачный фон
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  // Звездный материал и геометрия
-  const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5 });
-  const starGeometry = new THREE.BufferGeometry();
-
-  // Генерация звезд
-  const starCount = 1000;
-  const starPositions = new Float32Array(starCount * 3);
-  for (let i = 0; i < starCount; i++) {
-    const theta = Math.random() * 2 * Math.PI;
-    const phi = Math.acos(2 * Math.random() - 1);
-    const x = 500 * Math.sin(phi) * Math.cos(theta);
-    const y = 500 * Math.sin(phi) * Math.sin(theta);
-    const z = 500 * Math.cos(phi);
-
-    starPositions[i * 3] = x;
-    starPositions[i * 3 + 1] = y;
-    starPositions[i * 3 + 2] = z;
-  }
-
-  // Добавляем звезды в сцену
-  starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-  stars = new THREE.Points(starGeometry, starMaterial);
-  scene.add(stars);
-
-  // Настройка переменных для вращения
-  isDragging = false;
-  rotationX = 0;
-  rotationY = 0;
-  targetRotationX = 0;
-  targetRotationY = 0;
-  autoRotation = 0;
-
-  // Добавляем обработчики событий
-  addEventListeners();
-
-  // Запуск анимации
-  animate();
+  starPositions[i * 3] = x;
+  starPositions[i * 3 + 1] = y;
+  starPositions[i * 3 + 2] = z;
 }
 
-// Обработчики для ввода
-function addEventListeners() {
-  // Ввод мышью
-  document.addEventListener('mousedown', (event) => startInput(event.clientX, event.clientY));
-  document.addEventListener('mousemove', (event) => moveInput(event.clientX, event.clientY));
-  document.addEventListener('mouseup', () => endInput());
+starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+const stars = new THREE.Points(starGeometry, starMaterial);
+scene.add(stars);
 
-  // Ввод сенсором
-  document.addEventListener('touchstart', (event) => {
-    const touch = event.touches[0];
-    startInput(touch.clientX, touch.clientY);
-  });
-  document.addEventListener('touchmove', (event) => {
-    const touch = event.touches[0];
-    moveInput(touch.clientX, touch.clientY);
-  });
-  document.addEventListener('touchend', () => endInput());
+// Камера
+camera.position.z = 0;
 
-  // Обновление размеров окна
-  window.addEventListener('resize', onWindowResize);
-}
+// Логика вращения звёзд
+let isDragging = false;
+let previousPosition = { x: 0, y: 0 };
+let rotationX = 0;
+let rotationY = 0;
+let targetRotationX = 0;
+let targetRotationY = 0;
+let autoRotation = 0;
 
-// Обработка начала ввода
+// Начало ввода (мышь или сенсор)
 function startInput(clientX, clientY) {
   isDragging = true;
   previousPosition = { x: clientX, y: clientY };
 }
 
-// Обработка движения ввода
+// Обработка движения (мышь или сенсор)
 function moveInput(clientX, clientY) {
   if (!isDragging) return;
 
@@ -102,17 +63,38 @@ function moveInput(clientX, clientY) {
   previousPosition = { x: clientX, y: clientY };
 }
 
-// Обработка окончания ввода
+// Завершение ввода (мышь или сенсор)
 function endInput() {
   isDragging = false;
 }
 
-// Обновление размеров окна
-function onWindowResize() {
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-}
+// Обработчики для мыши
+document.addEventListener('mousedown', (event) => {
+  startInput(event.clientX, event.clientY);
+});
+
+document.addEventListener('mousemove', (event) => {
+  moveInput(event.clientX, event.clientY);
+});
+
+document.addEventListener('mouseup', () => {
+  endInput();
+});
+
+// Обработчики для сенсора
+document.addEventListener('touchstart', (event) => {
+  const touch = event.touches[0]; // Первый палец
+  startInput(touch.clientX, touch.clientY);
+});
+
+document.addEventListener('touchmove', (event) => {
+  const touch = event.touches[0]; // Первый палец
+  moveInput(touch.clientX, touch.clientY);
+});
+
+document.addEventListener('touchend', () => {
+  endInput();
+});
 
 // Анимация
 function animate() {
@@ -129,5 +111,11 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// Экспорт функции для инициализации
-export { initThreeJS };
+animate();
+
+// Обновление размеров сцены при изменении окна
+window.addEventListener('resize', () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+});

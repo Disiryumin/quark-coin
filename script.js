@@ -103,3 +103,37 @@ tasksButton.addEventListener("click", () => switchTab("tasks"));
 document.addEventListener('DOMContentLoaded', () => {
     initThreeJS();
   });
+  // Ваш существующий код в script.js
+
+// Добавьте этот код в самом конце файла:
+
+// Блокировка зума и нежелательных жестов
+document.addEventListener("gesturestart", (e) => {
+  e.preventDefault();
+}, { passive: false });
+
+document.addEventListener("gesturechange", (e) => {
+  e.preventDefault();
+}, { passive: false });
+
+document.addEventListener("gestureend", (e) => {
+  e.preventDefault();
+}, { passive: false });
+
+// Отключение скроллинга и свайпов
+window.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+}, { passive: false });
+
+// Полный фикс для Telegram
+document.addEventListener("touchstart", (e) => {
+  if (e.touches.length > 1) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener("touchmove", (e) => {
+  if (e.touches.length > 1) {
+    e.preventDefault();
+  }
+}, { passive: false });
