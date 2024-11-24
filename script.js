@@ -1,5 +1,8 @@
-import { initThreeJS } from './three.js';
-
+if (window.Telegram.WebApp) {
+  const webApp = window.Telegram.WebApp;
+  webApp.expand(); // Открыть WebApp на весь экран
+  console.log("Telegram WebApp initialized:", webApp.initDataUnsafe);
+}
 const starCanvas = document.getElementById("starsCanvas");
 const starCtx = starCanvas.getContext("2d");
 
@@ -100,40 +103,22 @@ farmingButton.addEventListener("click", () => switchTab("farming"));
 minigameButton.addEventListener("click", () => switchTab("minigame"));
 tasksButton.addEventListener("click", () => switchTab("tasks"));
 
-document.addEventListener('DOMContentLoaded', () => {
-    initThreeJS();
-  });
   // Ваш существующий код в script.js
 
 // Добавьте этот код в самом конце файла:
 
-// Блокировка зума и нежелательных жестов
-document.addEventListener("gesturestart", (e) => {
+// ========== Новый код для отключения жестов ==========
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+document.addEventListener('gesturechange', function(e) {
+  e.preventDefault();
+});
+document.addEventListener('gestureend', function(e) {
+  e.preventDefault();
+});
+
+window.addEventListener('touchmove', function(e) {
   e.preventDefault();
 }, { passive: false });
-
-document.addEventListener("gesturechange", (e) => {
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener("gestureend", (e) => {
-  e.preventDefault();
-}, { passive: false });
-
-// Отключение скроллинга и свайпов
-window.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-}, { passive: false });
-
-// Полный фикс для Telegram
-document.addEventListener("touchstart", (e) => {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-document.addEventListener("touchmove", (e) => {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
+// ======================================================
