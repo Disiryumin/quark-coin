@@ -122,53 +122,53 @@ body {
     }
 }
 
-/* Стили для сцены меню */
+/* Стиль для меню */
 #menuScene {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     height: 100vh;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
-}
-
-#gameStats {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  #gameStats {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
     padding: 0 20px;
-    color: white;
-    font-family: 'Space Mono', monospace;
+  }
+  
+  #gameTimer,
+  #gameCount,
+  #gameScores {
     font-size: 16px;
-}
-
-#claimButton {
-    background-color: #444;
+  }
+  
+  #claimButton {
+    font-size: 14px;
+    padding: 5px 10px;
+    background-color: #28a745;
     color: white;
     border: none;
-    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-}
-
-#claimButton:hover {
-    background-color: #666;
-}
-
-#playArea {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#playButton {
+  }
+  
+  #playArea {
+    margin-top: 50px;
+  }
+  
+  #playButton {
     width: 120px;
-    height: auto;
     cursor: pointer;
-}
-
-#playButton:active {
-    filter: brightness(0.8);
-}
+  }
+  
+  #playButton:active {
+    transform: scale(0.95);
+  }

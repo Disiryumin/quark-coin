@@ -14,6 +14,7 @@ async def start(update: Update, context):
 
     # Приветственное сообщение
     await update.message.reply_text(
+        text="Добро пожаловать в нашего бота! Нажмите кнопку ниже, чтобы открыть кликер.",
         reply_markup=reply_markup
     )
 

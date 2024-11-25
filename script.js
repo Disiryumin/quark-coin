@@ -99,9 +99,68 @@ farmingButton.addEventListener("click", () => switchTab("farming"));
 minigameButton.addEventListener("click", () => switchTab("minigame"));
 tasksButton.addEventListener("click", () => switchTab("tasks"));
 
-  // Ваш существующий код в script.js
+document.addEventListener("DOMContentLoaded", () => {
+  const menuScene = document.getElementById("menuScene");
+  const gameTimerEl = document.getElementById("gameTimer");
+  const gameCountEl = document.getElementById("gameCount");
+  const scoresEl = document.getElementById("gameScores");
+  const claimButton = document.getElementById("claimButton");
+  const playButton = document.getElementById("playButton");
 
-// Добавьте этот код в самом конце файла:
+  let availableGames = 5;
+  let scores = 0;
+  let nextGameTime = 2 * 60 * 60 * 1000; // 2 часа в миллисекундах
+  let timerInterval;
+
+  // Обновление таймера
+  function updateTimer() {
+    if (availableGames < 5) {
+      nextGameTime -= 1000;
+      const hours = Math.floor(nextGameTime / (60 * 60 * 1000));
+      const minutes = Math.floor((nextGameTime % (60 * 60 * 1000)) / (60 * 1000));
+
+      gameTimerEl.textContent = `Next game in: ${hours}h ${minutes}m`;
+
+      if (nextGameTime <= 0) {
+        availableGames++;
+        nextGameTime = 2 * 60 * 60 * 1000; // Сбрасываем таймер
+        updateGameCount();
+      }
+    } else {
+      gameTimerEl.textContent = "Games full!";
+    }
+  }
+
+  // Обновление доступных игр
+  function updateGameCount() {
+    gameCountEl.textContent = `Game x ${availableGames}`;
+    playButton.style.opacity = availableGames > 0 ? "1" : "0.5";
+    playButton.style.pointerEvents = availableGames > 0 ? "auto" : "none";
+  }
+
+  // Кнопка Claim
+  claimButton.addEventListener("click", () => {
+    console.log("Очки переведены в общий пул");
+    scores = 0;
+    scoresEl.textContent = `Scores: ${scores}`;
+  });
+
+  // Кнопка Play
+  playButton.addEventListener("click", () => {
+    if (availableGames > 0) {
+      availableGames--;
+      scores += Math.floor(Math.random() * 10 + 1); // Случайные очки
+      updateGameCount();
+      scoresEl.textContent = `Scores: ${scores}`;
+      console.log("Игра началась!");
+    }
+  });
+
+  // Инициализация
+  updateGameCount();
+  scoresEl.textContent = `Scores: ${scores}`;
+  timerInterval = setInterval(updateTimer, 1000);
+});
 
 // Блокировка зума и нежелательных жестов
 document.addEventListener("gesturestart", (e) => {
