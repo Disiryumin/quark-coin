@@ -11,11 +11,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Звёздный фон -->
-  <canvas id="starsCanvas"></canvas>
-
-  <!-- Вкладка Автофарминг -->
-  <div id="farmingTab" class="tab active">
+  <!-- Сцена Автофарминг -->
+  <div id="farmingScene" class="scene active">
+    <!-- Звёздный фон -->
+    <canvas id="starsCanvas"></canvas>
     <div class="ui">
       <div class="counter">QUARK: <span id="mainPoints">0</span></div>
       <div class="counter">farming: <span id="farmPoints">0</span></div>
@@ -23,23 +22,16 @@
     </div>
   </div>
 
-  <!-- Вкладка Задания -->
-  <div id="tasksTab" class="tab">
+  <!-- Сцена Задания -->
+  <div id="tasksScene" class="scene">
     <div class="centered-text">
       <h1>Tasks</h1>
       <p>Pierce the overgrown piglet’s nipples twice with a stapler</p>
     </div>
   </div>
 
-  <!-- Навигационная панель -->
-  <div class="nav">
-    <span id="farmingButton" class="active">Autofarming</span>
-    <span id="minigameButton">Mini-game</span>
-    <span id="tasksButton">Tasks</span>
-  </div>
-
-  <!-- Вкладка Мини-игра -->
-  <div id="menuScene" class="scene active">
+  <!-- Сцена Мини-игра -->
+  <div id="menuScene" class="scene">
     <!-- Счетчики -->
     <div id="gameStats">
       <div id="gameTimer">Next game in: 2h 00m</div>
@@ -52,6 +44,13 @@
     <div id="playArea">
       <img id="playButton" src="assets/play_button_normal.png" alt="Play Button">
     </div>
+  </div>
+
+  <!-- Навигационная панель -->
+  <div class="nav">
+    <span id="farmingButton" class="nav-item active">Autofarming</span>
+    <span id="minigameButton" class="nav-item">Mini-game</span>
+    <span id="tasksButton" class="nav-item">Tasks</span>
   </div>
 
   <!-- Подключение JS -->
