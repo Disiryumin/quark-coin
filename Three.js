@@ -39,10 +39,13 @@ let rotationY = 0;
 let targetRotationX = 0;
 let targetRotationY = 0;
 let autoRotation = 0;
+let isUserInteracting = false; // Флаг активности пользователя
+let autoRotationSpeed = 0.0005; // Скорость автоматического вращения
 
 // Начало ввода (мышь или сенсор)
 function startInput(clientX, clientY) {
   isDragging = true;
+  isUserInteracting = true; // Пользователь начал взаимодействие
   previousPosition = { x: clientX, y: clientY };
 }
 
@@ -56,7 +59,6 @@ function moveInput(clientX, clientY) {
   };
 
   const rotationSpeed = 0.005;
-
   targetRotationY += deltaMove.x * rotationSpeed;
   targetRotationX += deltaMove.y * rotationSpeed;
 
@@ -66,6 +68,11 @@ function moveInput(clientX, clientY) {
 // Завершение ввода (мышь или сенсор)
 function endInput() {
   isDragging = false;
+
+  // Через 2 секунды после завершения ввода возвращаемся к автовращению
+  setTimeout(() => {
+    isUserInteracting = false;
+  }, 200);
 }
 
 // Обработчики для мыши
@@ -98,12 +105,14 @@ document.addEventListener('touchend', () => {
 
 // Анимация
 function animate() {
-  autoRotation += 0.0005;
+  if (!isUserInteracting) {
+    autoRotation += autoRotationSpeed; // Добавляем автовращение только если пользователь не активен
+  }
 
   rotationX += (targetRotationX - rotationX) * 0.1;
   rotationY += (targetRotationY - rotationY) * 0.1;
 
-  // Вращение звёзд
+  // Применяем вращение звёзд
   stars.rotation.x = rotationX;
   stars.rotation.y = autoRotation + rotationY;
 
