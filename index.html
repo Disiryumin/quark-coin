@@ -4,45 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="MMPro Farming Game">
+  <meta name="description" content="Tapalka Clicker">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Tapalka Clicker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Сцена Автофарминг -->
+  <!-- Звёздный фон (только для AutoFarming) -->
+  <canvas id="starsCanvas"></canvas>
+
+  <!-- Сцены -->
   <div id="farmingScene" class="scene active">
-    <!-- Звёздный фон -->
-    <canvas id="starsCanvas"></canvas>
     <div class="ui">
       <div class="counter">QUARK: <span id="mainPoints">0</span></div>
-      <div class="counter">farming: <span id="farmPoints">0</span></div>
-      <button id="farmButton">start farming</button>
+      <div class="counter">Farming: <span id="farmPoints">0</span></div>
+      <button id="farmButton">Start Farming</button>
     </div>
   </div>
 
-  <!-- Сцена Задания -->
+  <div id="minigameScene" class="scene">
+    <div id="menuScene">
+      <div id="gameStats">
+        <div id="gameTimer">Next game in: 2h 00m</div>
+        <div id="gameCount">Game x 5</div>
+        <div id="gameScores">Scores: 0</div>
+        <button id="claimButton">Claim</button>
+      </div>
+      <div id="playArea">
+        <img id="playButton" src="assets/play_button_normal.png" alt="Play Button">
+      </div>
+    </div>
+  </div>
+
   <div id="tasksScene" class="scene">
     <div class="centered-text">
       <h1>Tasks</h1>
-      <p>Pierce the overgrown piglet’s nipples twice with a stapler</p>
-    </div>
-  </div>
-
-  <!-- Сцена Мини-игра -->
-  <div id="menuScene" class="scene">
-    <!-- Счетчики -->
-    <div id="gameStats">
-      <div id="gameTimer">Next game in: 2h 00m</div>
-      <div id="gameCount">Game x 5</div>
-      <div id="gameScores">Scores: 0</div>
-      <button id="claimButton">Claim</button>
-    </div>
-  
-    <!-- Кнопка Play -->
-    <div id="playArea">
-      <img id="playButton" src="assets/play_button_normal.png" alt="Play Button">
+      <p>Pierce the overgrown piglet’s nipples twice with a stapler.</p>
     </div>
   </div>
 
@@ -53,11 +51,10 @@
     <span id="tasksButton" class="nav-item">Tasks</span>
   </div>
 
-  <!-- Подключение JS -->
+  <!-- Подключение скриптов -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-  <script type="module" src="script.js"></script>
   <script src="three.js"></script>
   <script src="farming.js"></script>
-  <script src="menu_logic.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

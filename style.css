@@ -1,174 +1,57 @@
-/* Основной стиль для всего приложения */
 body {
     margin: 0;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    position: fixed;
-    width: 100%;
-    height: 100%;
+    padding: 0;
+    overflow: hidden;
     background: black;
     color: white;
     font-family: 'Space Mono', monospace;
     display: flex;
     flex-direction: column;
-    align-items: center;
     height: 100vh;
-}
-
-/* Стиль вкладки Tasks */
-#tasksTab .centered-text {
-    position: absolute;
-    top: 50%; /* Центр по вертикали */
-    left: 50%; /* Центр по горизонтали */
-    transform: translate(-50%, -50%); /* Перемещение в точный центр */
-    text-align: center;
-}
-
-/* Навигационная панель */
-.nav {
-    position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 40px); /* Учитываем чёлку */
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 10px 0;
-    display: flex;
-    justify-content: center;
-    z-index: 100;
-}
-
-.nav span {
-    font-size: 15px;
-    margin: 0 10px;
-    cursor: pointer;
-    padding: 5px;
-    color: gray;
-    text-transform: capitalize;
-}
-
-.nav span:hover {
-    color: white;
-}
-
-.nav span.active {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Стили вкладок */
-.tab {
+  }
+  
+  .scene {
     display: none;
     flex-grow: 1;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.tab.active {
+  }
+  
+  .scene.active {
     display: flex;
-}
-
-.tab h1 {
-    font-size: 24px;
-}
-
-/* UI для автофарминга */
-.ui {
-    text-align: center;
-    position: absolute;
-    top: 50%; /* Центр по вертикали */
-    left: 50%; /* Центр по горизонтали */
-    transform: translate(-50%, -50%); /* Перемещение в точный центр экрана */
-    background: none;
-    z-index: 1;
-}
-
-.ui .counter {
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.ui button {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-family: 'Space Mono', monospace; /* Основной шрифт */
+  }
+  
+  .nav {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+  }
+  
+  .nav-item {
+    margin: 0 15px;
+    cursor: pointer;
+    color: gray;
+  }
+  
+  .nav-item.active {
+    font-weight: bold;
+    color: white;
+  }
+  
+  button {
     background-color: #444;
     border: none;
     border-radius: 5px;
     color: white;
+    padding: 10px 20px;
     cursor: pointer;
-}
-
-.ui button:hover {
+  }
+  
+  button:hover {
     background-color: #666;
-}
-
-/* Адаптация под мобильные устройства */
-@media (max-width: 768px) {
-    .ui .counter {
-        font-size: 18px;
-    }
-
-    .ui button {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-
-    .nav {
-        font-size: 14px; /* Уменьшение размера текста */
-        padding-bottom: calc(env(safe-area-inset-bottom) + 15px); /* Учитываем безопасную область */
-    }
-
-    .ui {
-        top: 40%;
-    }
-}
-
-/* Стиль для меню */
-#menuScene {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-  }
-  
-  #gameStats {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
-  
-  #gameTimer,
-  #gameCount,
-  #gameScores {
-    font-size: 16px;
-  }
-  
-  #claimButton {
-    font-size: 14px;
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #playArea {
-    margin-top: 50px;
-  }
-  
-  #playButton {
-    width: 120px;
-    cursor: pointer;
-  }
-  
-  #playButton:active {
-    transform: scale(0.95);
   }
