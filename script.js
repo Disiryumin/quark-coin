@@ -74,57 +74,86 @@ document.addEventListener("DOMContentLoaded", () => {
   // Инициализация при загрузке
   initStarsCanvas();
 
-  // Логика переключения сцен
-  document.querySelectorAll(".nav-item").forEach((navButton) => {
-    navButton.addEventListener("click", () => {
-      const targetSceneId = navButton.id.replace("Button", "Scene");
-      document.querySelectorAll(".scene").forEach((scene) => {
-        scene.classList.remove("active");
-      });
-
-      const targetScene = document.getElementById(targetSceneId);
-      if (targetScene) {
-        targetScene.classList.add("active");
-      }
-
-      // Если вернулись в сцену "Автофарминг", запускаем фон
-      if (targetSceneId === "farmingScene") {
-        initStarsCanvas();
-      } else {
-        // Останавливаем анимацию, если ушли с "Автофарминга"
-        cancelAnimationFrame(animationFrameId);
-      }
+  // Обновляем логику переключения вкладок
+  function switchTab(tabName) {
+    // Сначала отключаем все сцены
+    document.querySelectorAll(".tab, .scene").forEach((scene) => {
+      scene.classList.remove("active");
     });
-  });
+
+    // Включаем нужную сцену
+    const targetScene = document.getElementById(`${tabName}Tab`) || document.getElementById(`${tabName}Scene`);
+    if (targetScene) {
+      targetScene.classList.add("active");
+    } else {
+      console.error(`Сцена с ID '${tabName}Tab' или '${tabName}Scene' не найдена.`);
+    }
+
+    // Останавливаем или запускаем звёздный фон
+    if (tabName === "farming") {
+      initStarsCanvas();
+    } else {
+      cancelAnimationFrame(animationFrameId);
+    }
+  }
+
+  // Логика для кнопок
+  document.getElementById("farmingButton").addEventListener("click", () => switchTab("farming"));
+  document.getElementById("minigameButton").addEventListener("click", () => switchTab("menu"));
+  document.getElementById("tasksButton").addEventListener("click", () => switchTab("tasks"));
 });
 
 // Блокировка зума и нежелательных жестов
-document.addEventListener("gesturestart", (e) => {
-  e.preventDefault();
-}, { passive: false });
+document.addEventListener(
+  "gesturestart",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
-document.addEventListener("gesturechange", (e) => {
-  e.preventDefault();
-}, { passive: false });
+document.addEventListener(
+  "gesturechange",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
-document.addEventListener("gestureend", (e) => {
-  e.preventDefault();
-}, { passive: false });
+document.addEventListener(
+  "gestureend",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
 // Отключение скроллинга и свайпов
-window.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-}, { passive: false });
+window.addEventListener(
+  "touchmove",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
 // Полный фикс для Telegram
-document.addEventListener("touchstart", (e) => {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
+document.addEventListener(
+  "touchstart",
+  (e) => {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  },
+  { passive: false }
+);
 
-document.addEventListener("touchmove", (e) => {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  },
+  { passive: false }
+);
